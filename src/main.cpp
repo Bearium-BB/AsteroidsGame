@@ -1,9 +1,12 @@
 #include "raylib.h"
 #include "rlgl.h"
+#include <math.h>
 
 
 class Player {
   public:
+    Vector2 position = {0,0};
+
     Vector2 p1 = { 100, 50.0f };
     Vector2 p2 = { 100 - 20.0f, 100.0f };
     Vector2 p3 = { 100 + 20.0f, 100.0f };
@@ -12,9 +15,24 @@ class Player {
         (p1.x + p2.x + p3.x) / 3.0f,
         (p1.y + p2.y + p3.y) / 3.0f
     };
+
     double angle = 0;
 
+    
     void Update(){
+        if (IsKeyDown(KEY_W))
+        {
+            float rad = (angle - 90.0f) * DEG2RAD;
+
+            Vector2 forward = {
+                cosf(rad),
+                sinf(rad)
+            };
+
+            position.x += forward.x * 1;
+            position.y += forward.y * 1;
+        }
+
         if (IsKeyDown(KEY_D))
         {
             angle++;
@@ -31,7 +49,7 @@ class Player {
     void Draw(){
         rlPushMatrix();
 
-            rlTranslatef(center.x, center.y, 0);
+            rlTranslatef(center.x + position.x, center.y + position.y, 0);
 
             rlRotatef(angle, 0, 0, 1);
 
