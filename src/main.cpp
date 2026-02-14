@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "rlgl.h"
 #include <math.h>
-
+#include "raymath.h"
 
 class Player {
   public:
@@ -18,8 +18,8 @@ class Player {
     };
 
     double angle = 0;
+    float maxSpeed = 7.0f;
 
-    
     void Update(){
         if (IsKeyDown(KEY_W))
         {
@@ -45,15 +45,20 @@ class Player {
 
         if (angle >= 360) angle -= 360;
         if (angle <= 0) angle += 360;
-        
+
         UpdatePosition();
     };
 
-    void UpdatePosition(){
-        position.x += velocity.x;
-        position.y += velocity.y;
-        velocity.x = velocity.x * 0.95;
-        velocity.y = velocity.y * 0.95;
+    void UpdatePosition() {
+        float speed = Vector2Length(velocity);
+
+        if (speed > maxSpeed) {
+            velocity = Vector2Scale(Vector2Normalize(velocity), maxSpeed);
+        }
+
+        position = Vector2Add(position, velocity);
+
+        velocity = Vector2Scale(velocity, 0.95f);
     }
 
     void Draw(){
