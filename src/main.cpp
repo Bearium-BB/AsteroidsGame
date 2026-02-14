@@ -6,6 +6,7 @@
 class Player {
   public:
     Vector2 position = {0,0};
+    Vector2 velocity = {0,0};
 
     Vector2 p1 = { 100, 50.0f };
     Vector2 p2 = { 100 - 20.0f, 100.0f };
@@ -29,22 +30,31 @@ class Player {
                 sinf(rad)
             };
 
-            position.x += forward.x * 1;
-            position.y += forward.y * 1;
+            velocity.x += forward.x * 1;
+            velocity.y += forward.y * 1;
         }
 
         if (IsKeyDown(KEY_D))
         {
-            angle++;
+            angle += 3;
         }
         if (IsKeyDown(KEY_A))
         {
-            angle--;
+            angle -= 3;
         }
 
         if (angle >= 360) angle -= 360;
         if (angle <= 0) angle += 360;
+        
+        UpdatePosition();
     };
+
+    void UpdatePosition(){
+        position.x += velocity.x;
+        position.y += velocity.y;
+        velocity.x = velocity.x * 0.95;
+        velocity.y = velocity.y * 0.95;
+    }
 
     void Draw(){
         rlPushMatrix();
