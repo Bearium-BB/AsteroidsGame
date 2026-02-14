@@ -30,8 +30,7 @@ class Player {
                 sinf(rad)
             };
 
-            velocity.x += forward.x * 1;
-            velocity.y += forward.y * 1;
+            velocity = Vector2Add(velocity,forward);
         }
 
         if (IsKeyDown(KEY_D))
