@@ -15,6 +15,9 @@ public:
 
     double angle;
     float maxSpeed;
+    float dt;
+    float forwardSpeed;
+    float rotationSpeed;
 
     Player();              
 

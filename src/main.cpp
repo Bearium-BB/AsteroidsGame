@@ -20,12 +20,10 @@ int main()
 
     while (!WindowShouldClose())
     {     
-   
         player.Update();
         BeginDrawing();
             ClearBackground(darkGreen);
             player.Draw();
-            DrawCircle(0, 0, 50.0f, MAROON);                
         EndDrawing();
     }
     

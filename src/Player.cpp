@@ -19,9 +19,13 @@ Player::Player()
         (p1.y + p2.y + p3.y) / 3.0f
     };
     maxSpeed = 7;
+    forwardSpeed = 100;
+    rotationSpeed = 100;
+    dt = GetFrameTime();
 }
 
 void Player::Update(){
+    dt = GetFrameTime();
     int current_width = GetScreenWidth();
     int current_height = GetScreenHeight();
 
@@ -33,21 +37,21 @@ void Player::Update(){
             cosf(rad),
             sinf(rad)
         };
-
+        forward = Vector2Scale(forward,forwardSpeed * dt);
         velocity = Vector2Add(velocity,forward);
     }
 
     if (IsKeyDown(KEY_D))
     {
-        angle += 3;
+        angle += rotationSpeed * dt;
     }
 
     if (IsKeyDown(KEY_A))
     {
-        angle -= 3;
+        angle -= rotationSpeed * dt;
     }
 
-    if (IsKeyDown(KEY_SPACE))
+    if (IsKeyPressed(KEY_SPACE))
     {
         float x = GetRandomValue(0, current_width); 
         float y = GetRandomValue(0, current_height); 
@@ -62,9 +66,9 @@ void Player::Update(){
 };
 
 void Player::UpdatePosition() {
-    float speed = Vector2Length(velocity);
+    float currentSpeed = Vector2Length(velocity);
 
-    if (speed > maxSpeed) {
+    if (currentSpeed > maxSpeed) {
         velocity = Vector2Scale(Vector2Normalize(velocity), maxSpeed);
     }
 
