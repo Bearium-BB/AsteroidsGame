@@ -2,11 +2,11 @@
 #define ASTEROID_H
 
 #include "raylib.h"
+#include "Actor.h"
 
-class Asteroid {
+class Asteroid : public Actor {
 public:
-    Vector2 position;
-    Vector2 velocity;
+
     Vector2 direction;
 
     float maxSpeed;

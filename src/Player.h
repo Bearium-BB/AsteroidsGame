@@ -2,11 +2,10 @@
 #define PLAYER_H
 
 #include "raylib.h"
+#include "Actor.h"
 
-class Player {
+class Player : public Actor {
 public:
-    Vector2 position;
-    Vector2 velocity;
 
     Vector2 p1;
     Vector2 p2;

@@ -2,9 +2,11 @@
 #include "rlgl.h"
 #include <math.h>
 #include "raymath.h"
+#include <stdio.h>
 #include "Player.h"
 #include "Asteroid.h"
-#include <stdio.h>
+
+
 int main() 
 {
     const Color darkGreen = {20, 160, 133, 255};
