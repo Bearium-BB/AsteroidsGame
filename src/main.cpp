@@ -3,7 +3,8 @@
 #include <math.h>
 #include "raymath.h"
 #include "Player.h"
-
+#include "Asteroid.h"
+#include <stdio.h>
 int main() 
 {
     const Color darkGreen = {20, 160, 133, 255};
@@ -16,14 +17,32 @@ int main()
 
 
     Player player;
+    Asteroid asteroids[10];
 
 
     while (!WindowShouldClose())
     {     
         player.Update();
+        for (int i = 0; i < sizeof(asteroids) / sizeof(asteroids[0]); i++)
+        {
+            asteroids[i].Update();
+        }
+
+        for (int i = 0; i < sizeof(asteroids) / sizeof(asteroids[0]); i++)
+        {
+            if(CheckCollisionCircles(player.position,30,asteroids[i].position,asteroids[i].size)){
+                printf("hit\n");
+            }
+        }
+        
+        
         BeginDrawing();
             ClearBackground(darkGreen);
             player.Draw();
+            for (int i = 0; i < sizeof(asteroids) / sizeof(asteroids[0]); i++)
+            {
+                asteroids[i].Draw();
+            } 
         EndDrawing();
     }
     
