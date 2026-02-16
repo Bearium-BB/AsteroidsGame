@@ -3,10 +3,17 @@
 #include "Asteroid.h"
 
 GameMode::GameMode(){
-    asteroids.resize(10);
-    asteroids.size();
+
 }
 
 void GameMode::Update(){
+    player.Update();
+    asteroidManager.Update();
+    asteroidManager.PlayerToAsteroidCollision(player);
+}
 
+
+void GameMode::Draw(){
+    player.Draw();
+    asteroidManager.Draw();
 }

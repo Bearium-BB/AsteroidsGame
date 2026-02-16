@@ -2,10 +2,9 @@
 #include "rlgl.h"
 #include <math.h>
 #include "raymath.h"
-#include <stdio.h>
 #include "Player.h"
 #include "Asteroid.h"
-
+#include "GameMode.h"
 
 int main() 
 {
@@ -17,34 +16,16 @@ int main()
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
     SetTargetFPS(60);
 
-
-    Player player;
-    Asteroid asteroids[10];
-
+    GameMode gameMode;
 
     while (!WindowShouldClose())
     {     
-        player.Update();
-        for (int i = 0; i < sizeof(asteroids) / sizeof(asteroids[0]); i++)
-        {
-            asteroids[i].Update();
-        }
-
-        for (int i = 0; i < sizeof(asteroids) / sizeof(asteroids[0]); i++)
-        {
-            if(CheckCollisionCircles(player.position,30,asteroids[i].position,asteroids[i].size)){
-                printf("hit\n");
-            }
-        }
-        
-        
+        gameMode.Update();
+ 
         BeginDrawing();
             ClearBackground(darkGreen);
-            player.Draw();
-            for (int i = 0; i < sizeof(asteroids) / sizeof(asteroids[0]); i++)
-            {
-                asteroids[i].Draw();
-            } 
+            gameMode.Draw();
+
         EndDrawing();
     }
     

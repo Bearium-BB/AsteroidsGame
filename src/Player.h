@@ -24,6 +24,7 @@ public:
     void UpdatePosition();
     void Draw();
     void Wrapping(); 
+    void TookDamage();
 };
 
 #endif

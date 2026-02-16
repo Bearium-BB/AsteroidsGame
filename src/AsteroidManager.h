@@ -1,3 +1,6 @@
+#ifndef ASTEROIDMANAGER_H
+#define ASTEROIDMANAGER_H
+
 #include <vector>
 #include "raylib.h"
 #include "Asteroid.h"
@@ -10,6 +13,9 @@ class AsteroidManager
 
         AsteroidManager();
 
+        void PlayerToAsteroidCollision(Player& player);
         void Update();
-        void PlayerToAsteroidCollision(Player player);
+        void Draw();
 };
+
+#endif

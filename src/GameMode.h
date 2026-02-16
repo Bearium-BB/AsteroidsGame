@@ -6,15 +6,17 @@
 #include "Asteroid.h"
 #include <vector>
 #include "Actor.h"
+#include "AsteroidManager.h"
 
 class GameMode {
 public:
     Player player;
-    std::vector<Asteroid> asteroids;
+    AsteroidManager asteroidManager;
 
     GameMode();
 
     void Update();
+    void Draw();
 };
 
 #endif

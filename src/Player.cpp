@@ -114,3 +114,7 @@ void Player::Wrapping(){
         position.y = current_height - 1;
     }
 }
+
+void Player::TookDamage(){
+    position = {(float)GetScreenWidth()/2,(float)GetScreenHeight()/2};
+}
