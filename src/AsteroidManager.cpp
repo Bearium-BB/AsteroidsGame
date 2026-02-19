@@ -4,6 +4,10 @@
 #include "AsteroidManager.h"
 #include "Player.h"
 #include <stdio.h>
+#include <iostream>
+#include "raymath.h"
+
+
 
 AsteroidManager::AsteroidManager(){
     asteroids.resize(10);
@@ -12,9 +16,11 @@ AsteroidManager::AsteroidManager(){
 void AsteroidManager::PlayerToAsteroidCollision(Player& player){
     for (int i = 0; i < asteroids.size(); i++)
     {
-        if(CheckCollisionCircles(player.position,30,asteroids[i].position,asteroids[i].size)){
+        if(CheckCollisionCircles(player.position,28,asteroids[i].position,asteroids[i].size)){
             player.TookDamage();
-            printf("hit\n");
+            std::cout << player.velocity.x << " , "
+                    << player.velocity.y << " : " 
+                    << Vector2Length(player.velocity) << std::endl;
         }
     }    
 }

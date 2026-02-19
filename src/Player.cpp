@@ -18,9 +18,11 @@ Player::Player()
         (p1.x + p2.x + p3.x) / 3.0f,
         (p1.y + p2.y + p3.y) / 3.0f
     };
+
     maxSpeed = 7;
     forwardSpeed = 100;
     rotationSpeed = 100;
+
     dt = GetFrameTime();
 }
 
@@ -37,6 +39,7 @@ void Player::Update(){
             cosf(rad),
             sinf(rad)
         };
+
         forward = Vector2Scale(forward,forwardSpeed * dt);
         velocity = Vector2Add(velocity,forward);
     }
@@ -53,6 +56,11 @@ void Player::Update(){
 
     if (IsKeyPressed(KEY_SPACE))
     {
+        bullets.push_back(Bullet(position.x,position.y,angle));
+    }
+
+    if (IsKeyPressed(KEY_Q))
+    {
         float x = GetRandomValue(0, current_width); 
         float y = GetRandomValue(0, current_height); 
         position = {x,y};
@@ -61,8 +69,21 @@ void Player::Update(){
     if (angle >= 360) angle -= 360;
     if (angle <= 0) angle += 360;
 
+
+    for (int i = 0; i < bullets.size(); i++)
+    {
+        bullets[i].Update();
+    }
+
     UpdatePosition();
     Wrapping();
+
+    for (int i = 0; i < bullets.size(); i++)
+    {
+        if(bullets[i].timer < 0){
+            bullets.erase(bullets.begin() + i);
+        }
+    }
 };
 
 void Player::UpdatePosition() {
@@ -92,6 +113,10 @@ void Player::Draw(){
         );
 
     rlPopMatrix();
+    for (int i = 0; i < bullets.size(); i++)
+    {
+        bullets[i].Draw();
+    }
 }
 
 void Player::Wrapping(){

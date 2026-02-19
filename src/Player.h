@@ -3,6 +3,8 @@
 
 #include "raylib.h"
 #include "Actor.h"
+#include "Bullet.h"
+#include <vector>
 
 class Player : public Actor {
 public:
@@ -11,6 +13,8 @@ public:
     Vector2 p2;
     Vector2 p3;
     Vector2 center;
+
+    std::vector<Bullet> bullets;
 
     double angle;
     float maxSpeed;

@@ -13,6 +13,7 @@ public:
     float dt;
     float speed;
     float size;
+    float angle;
 
     Asteroid();
     void Update();
