@@ -24,6 +24,11 @@ Player::Player()
     rotationSpeed = 100;
 
     dt = GetFrameTime();
+
+    health = 3;
+    isInvincible = false;
+    elapsedTimeForIsInvincible = 0;
+    isInvincibleTime = 2;
 }
 
 void Player::Update(){
@@ -84,6 +89,14 @@ void Player::Update(){
             bullets.erase(bullets.begin() + i);
         }
     }
+    
+    if(isInvincible){
+        elapsedTimeForIsInvincible += dt;
+    }
+
+    if(elapsedTimeForIsInvincible > isInvincibleTime){
+        isInvincible = false;
+    }
 };
 
 void Player::UpdatePosition() {
@@ -141,5 +154,10 @@ void Player::Wrapping(){
 }
 
 void Player::TookDamage(){
-    position = {(float)GetScreenWidth()/2,(float)GetScreenHeight()/2};
+    if(!isInvincible){
+        position = {(float)GetScreenWidth()/2,(float)GetScreenHeight()/2};
+        elapsedTimeForIsInvincible = 0;
+        health--;
+        isInvincible = true;
+    }
 }
