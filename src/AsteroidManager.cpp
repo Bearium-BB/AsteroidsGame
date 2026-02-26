@@ -21,6 +21,7 @@ void AsteroidManager::PlayerToAsteroidCollision(Player& player){
             std::cout << player.velocity.x << " , "
                     << player.velocity.y << " : " 
                     << Vector2Length(player.velocity) << std::endl;
+            asteroids.erase(asteroids.begin() + i);
         }
     }    
 }

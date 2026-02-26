@@ -5,7 +5,7 @@
 
 
 GameMode::GameMode(){
-
+    score = 0;
     player = new Player(&bulletManager);
 }
 
@@ -15,7 +15,7 @@ void GameMode::Update(){
     asteroidManager.PlayerToAsteroidCollision(*player); 
     bulletManager.Update();
     score += bulletManager.BulletToAsteroidCollision(asteroidManager);
-    std::cout << score;
+    std::cout << score << std::endl;
 }
 
 void GameMode::Draw(){

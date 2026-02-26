@@ -31,6 +31,7 @@ Player::Player(BulletManager* bulletManagerTest)
     elapsedTimeForIsInvincible = 0;
     isInvincibleTime = 2;
     bulletManager = bulletManagerTest;
+    color = { 255, 0, 255, 255 };
 }
 
 void Player::Update(){
@@ -92,6 +93,10 @@ void Player::Update(){
     if(elapsedTimeForIsInvincible > isInvincibleTime){
         isInvincible = false;
     }
+
+    if(!isInvincible){
+        color = { 255, 0, 255, 255 };
+    }
 };
 
 void Player::UpdatePosition() {
@@ -117,7 +122,7 @@ void Player::Draw(){
             (Vector2){ p1.x - center.x, p1.y - center.y },
             (Vector2){ p2.x - center.x, p2.y - center.y },
             (Vector2){ p3.x - center.x, p3.y - center.y },
-            VIOLET
+            color
         );
 
     rlPopMatrix();
@@ -154,5 +159,6 @@ void Player::TookDamage(){
         elapsedTimeForIsInvincible = 0;
         health--;
         isInvincible = true;
+        color = { 255, 0, 100, 255 };
     }
 }
