@@ -41,3 +41,8 @@ void AsteroidManager::Draw(){
     }
 
 }
+
+void AsteroidManager::GameOver(){
+    asteroids.clear();
+    asteroids.resize(10);
+}

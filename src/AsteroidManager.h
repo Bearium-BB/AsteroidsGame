@@ -17,6 +17,7 @@ class AsteroidManager
         void PlayerToAsteroidCollision(Player& player);
         void Update();
         void Draw();
+        void GameOver();
 };
 
 #endif

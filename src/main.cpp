@@ -14,6 +14,7 @@ int main()
     constexpr int screenHeight = 600;
         
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
+    InitAudioDevice();
     SetTargetFPS(60);
 
     GameMode gameMode;
