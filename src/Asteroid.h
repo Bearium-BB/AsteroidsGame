@@ -16,6 +16,8 @@ public:
     float angle;
 
     Asteroid();
+    Asteroid(Vector2 position);
+
     void Update();
     void Draw();
     void Wrapping();      

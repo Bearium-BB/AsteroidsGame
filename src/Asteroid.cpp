@@ -24,6 +24,19 @@ Asteroid::Asteroid(){
     size = GetRandomValue(5, 20);
 }
 
+Asteroid::Asteroid(Vector2 position){
+    float directionX = (float)GetRandomValue(-1000, 1000)/1000;
+    float directionY = (float)GetRandomValue(-1000, 1000)/1000;
+    
+    speed = 100;
+
+    position = position;
+    direction = {directionX,directionY};
+    velocity = Vector2Scale(direction,speed);
+
+    size = GetRandomValue(5, 20);
+}
+
 void Asteroid::Update(){
 
     dt = GetFrameTime();

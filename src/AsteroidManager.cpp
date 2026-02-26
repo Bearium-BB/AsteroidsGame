@@ -13,6 +13,7 @@ AsteroidManager::AsteroidManager(){
     asteroids.resize(10);
 }
 
+
 void AsteroidManager::PlayerToAsteroidCollision(Player& player){
     for (int i = 0; i < asteroids.size(); i++)
     {
@@ -21,6 +22,8 @@ void AsteroidManager::PlayerToAsteroidCollision(Player& player){
             std::cout << player.velocity.x << " , "
                     << player.velocity.y << " : " 
                     << Vector2Length(player.velocity) << std::endl;
+            AddAsteroid(asteroids[i].position);
+            AddAsteroid(asteroids[i].position);
             asteroids.erase(asteroids.begin() + i);
         }
     }    
@@ -42,7 +45,12 @@ void AsteroidManager::Draw(){
 
 }
 
+
 void AsteroidManager::GameOver(){
     asteroids.clear();
     asteroids.resize(10);
+}
+
+void AsteroidManager::AddAsteroid(Vector2 position){
+    asteroids.push_back(Asteroid(position));
 }

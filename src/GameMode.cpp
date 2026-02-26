@@ -35,7 +35,6 @@ void GameMode::Update(){
     if(player->health == 0){
         player->health = 3;
         asteroidManager.GameOver();
-        player->velocity = {0,0};
     }
 }
 

@@ -160,5 +160,6 @@ void Player::TookDamage(){
         health--;
         isInvincible = true;
         color = { 255, 0, 100, 255 };
+        velocity = {0,0};
     }
 }

@@ -13,11 +13,12 @@ class AsteroidManager
         std::vector<Asteroid> asteroids;
 
         AsteroidManager();
-
+ 
         void PlayerToAsteroidCollision(Player& player);
         void Update();
         void Draw();
         void GameOver();
+        void AddAsteroid(Vector2 position);
 };
 
 #endif
