@@ -3,9 +3,10 @@
 #include "rlgl.h"
 #include <math.h>
 #include "raymath.h"
+#include "BulletManager.h"
 
 
-Player::Player()
+Player::Player(BulletManager* bulletManagerTest)
 {
     position = {(float)GetScreenWidth()/2,(float)GetScreenHeight()/2};
     velocity = {0,0};
@@ -29,6 +30,7 @@ Player::Player()
     isInvincible = false;
     elapsedTimeForIsInvincible = 0;
     isInvincibleTime = 2;
+    bulletManager = bulletManagerTest;
 }
 
 void Player::Update(){
@@ -61,7 +63,7 @@ void Player::Update(){
 
     if (IsKeyPressed(KEY_SPACE))
     {
-        bullets.push_back(Bullet(position.x,position.y,angle));
+        bulletManager->AddBullet(Bullet(position.x,position.y,angle));
     }
 
     if (IsKeyPressed(KEY_Q))
@@ -82,13 +84,6 @@ void Player::Update(){
 
     UpdatePosition();
     Wrapping();
-
-    for (int i = 0; i < bullets.size(); i++)
-    {
-        if(bullets[i].timer < 0){
-            bullets.erase(bullets.begin() + i);
-        }
-    }
     
     if(isInvincible){
         elapsedTimeForIsInvincible += dt;

@@ -7,11 +7,14 @@
 #include <vector>
 #include "Actor.h"
 #include "AsteroidManager.h"
+#include "BulletManager.h"
 
 class GameMode {
 public:
-    Player player;
+    Player* player;
     AsteroidManager asteroidManager;
+    BulletManager bulletManager;
+    float score;
 
     GameMode();
 

@@ -6,6 +6,8 @@
 #include "Bullet.h"
 #include <vector>
 
+class BulletManager;
+
 class Player : public Actor {
 public:
 
@@ -13,6 +15,7 @@ public:
     Vector2 p2;
     Vector2 p3;
     Vector2 center;
+    BulletManager* bulletManager;
     float health;
     bool isInvincible;
     float elapsedTimeForIsInvincible;
@@ -26,7 +29,7 @@ public:
     float forwardSpeed;
     float rotationSpeed;
 
-    Player();              
+    Player(BulletManager* bulletManagerTest);              
 
     void Update();
     void UpdatePosition();

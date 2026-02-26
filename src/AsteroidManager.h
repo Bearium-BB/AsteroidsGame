@@ -4,7 +4,8 @@
 #include <vector>
 #include "raylib.h"
 #include "Asteroid.h"
-#include "Player.h"
+
+class Player;
 
 class AsteroidManager
 {

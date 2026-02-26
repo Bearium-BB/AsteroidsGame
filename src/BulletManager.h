@@ -12,12 +12,14 @@ class BulletManager
 {
     public:
         std::vector<Bullet> bullets;
+        float score;
 
         BulletManager();
 
-        void BulletToAsteroidCollision(AsteroidManager& asteroidManager);
+        float BulletToAsteroidCollision(AsteroidManager& asteroidManager);
         void Update();
         void Draw();
+        void AddBullet(Bullet bullet);
 };
 
 #endif
