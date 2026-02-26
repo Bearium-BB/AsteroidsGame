@@ -15,6 +15,8 @@ public:
     AsteroidManager asteroidManager;
     BulletManager bulletManager;
     float score;
+    float newLifeScore;
+    Music music;
 
     GameMode();
 
