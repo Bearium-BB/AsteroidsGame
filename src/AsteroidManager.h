@@ -18,7 +18,7 @@ class AsteroidManager
         void Update();
         void Draw();
         void GameOver();
-        void AddAsteroid(Vector2 position);
+        void AddAsteroid(Vector2 position, float parentSize);
 };
 
 #endif

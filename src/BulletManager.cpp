@@ -21,10 +21,12 @@ float BulletManager::BulletToAsteroidCollision(AsteroidManager& asteroidManager)
         for (int j = bullets.size() - 1; j >= 0; j--)        
         {
             if(CheckCollisionCircles(bullets[j].position, bullets[j].size, asteroidManager.asteroids[i].position, asteroidManager.asteroids[i].size)){
+                
+                asteroidManager.AddAsteroid(asteroidManager.asteroids[i].position,asteroidManager.asteroids[i].size);
+                asteroidManager.AddAsteroid(asteroidManager.asteroids[i].position,asteroidManager.asteroids[i].size);  
                 asteroidManager.asteroids.erase(asteroidManager.asteroids.begin() + i);
                 bullets.erase(bullets.begin() + j);
-                score += 1000;
-
+                score += 1000;              
             }
         }
     }   

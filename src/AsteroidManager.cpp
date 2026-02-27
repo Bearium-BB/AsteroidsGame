@@ -10,29 +10,38 @@
 
 
 AsteroidManager::AsteroidManager(){
-    asteroids.resize(10);
+    asteroids.resize(20);
 }
 
 
 void AsteroidManager::PlayerToAsteroidCollision(Player& player){
-    for (int i = 0; i < asteroids.size(); i++)
-    {
-        if(CheckCollisionCircles(player.position,28,asteroids[i].position,asteroids[i].size)){
-            player.TookDamage();
-            std::cout << player.velocity.x << " , "
-                    << player.velocity.y << " : " 
-                    << Vector2Length(player.velocity) << std::endl;
-            AddAsteroid(asteroids[i].position);
-            AddAsteroid(asteroids[i].position);
-            asteroids.erase(asteroids.begin() + i);
-        }
-    }    
+        for (int i = asteroids.size() - 1; i >= 0; i--)
+        {
+            if (CheckCollisionCircles(player.position, 28,
+                                    asteroids[i].position,
+                                    asteroids[i].size))
+            {
+
+                if(!player.isInvincible){
+                    AddAsteroid(asteroids[i].position,asteroids[i].size);
+                    AddAsteroid(asteroids[i].position,asteroids[i].size);
+
+                    asteroids.erase(asteroids.begin() + i);
+                }
+
+                player.TookDamage();
+
+            }
+        }   
 }
 
 void AsteroidManager::Update(){
     for (int i = 0; i < asteroids.size(); i++)
     {
         asteroids[i].Update();
+        if(asteroids[i].size < 5){
+            asteroids.erase(asteroids.begin() + i);
+        }
     }
 
 }
@@ -51,6 +60,6 @@ void AsteroidManager::GameOver(){
     asteroids.resize(10);
 }
 
-void AsteroidManager::AddAsteroid(Vector2 position){
-    asteroids.push_back(Asteroid(position));
+void AsteroidManager::AddAsteroid(Vector2 position,float parentSize){
+    asteroids.push_back(Asteroid(position,parentSize));
 }

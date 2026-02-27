@@ -15,26 +15,26 @@ Asteroid::Asteroid(){
     float directionX = (float)GetRandomValue(-1000, 1000)/1000;
     float directionY = (float)GetRandomValue(-1000, 1000)/1000;
     
-    speed = 100;
+    size = GetRandomValue(5, 25);
+
+    speed = 300 / (size/2);
 
     position = {px,py};
     direction = {directionX,directionY};
     velocity = Vector2Scale(direction,speed);
 
-    size = GetRandomValue(5, 20);
 }
 
-Asteroid::Asteroid(Vector2 position){
+Asteroid::Asteroid(Vector2 position,float parentSize){
     float directionX = (float)GetRandomValue(-1000, 1000)/1000;
     float directionY = (float)GetRandomValue(-1000, 1000)/1000;
     
-    speed = 100;
+    speed = 300 / (parentSize/2);
 
-    position = position;
+    this->position = position;
     direction = {directionX,directionY};
     velocity = Vector2Scale(direction,speed);
-
-    size = GetRandomValue(5, 20);
+    size = parentSize/2;
 }
 
 void Asteroid::Update(){

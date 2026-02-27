@@ -16,7 +16,7 @@ public:
     float angle;
 
     Asteroid();
-    Asteroid(Vector2 position);
+    Asteroid(Vector2 position,float parentSize);
 
     void Update();
     void Draw();
