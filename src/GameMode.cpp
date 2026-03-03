@@ -11,7 +11,7 @@ GameMode::GameMode(){
     music = LoadMusicStream("../MP3/MusicBackground.mp3");
     music.looping = true;
     PlayMusicStream(music);
-    testSaucer = Saucer(player);
+    testSaucer = Saucer(player, &bulletManager);
 }
 
 void GameMode::Update(){

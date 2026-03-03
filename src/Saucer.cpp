@@ -5,10 +5,12 @@
 #include "raymath.h"
 #include "Saucer.h"
 #include "Player.h"
+#include "BulletManager.h"
 
-Saucer::Saucer(Player* currentPlayer)
+Saucer::Saucer(Player* currentPlayer, BulletManager* bulletManagerTest)
 {
     player = currentPlayer;
+    bulletManager = bulletManagerTest;
     int current_width = GetScreenWidth();
     int current_height = GetScreenHeight();
 
@@ -24,12 +26,22 @@ Saucer::Saucer(){
 
 }
 
-void Saucer::Update(){
-
+void Saucer::Update()
+{
     dt = GetFrameTime();
+
+    timeToShoot -= dt;
 
     position = Vector2Add(position,Vector2Scale(velocity,dt));
     Wrapping();
+    if(timeToShoot < 0){
+        Vector2 dir = Vector2Subtract(player->position, position);
+
+        float angle = atan2f(dir.y, dir.x) * RAD2DEG;
+
+        bulletManager->AddBullet(Bullet(position.x,position.y,angle + 90));
+        timeToShoot = 3;
+    }
 }
 
 void Saucer::Draw(){
