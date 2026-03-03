@@ -5,19 +5,18 @@
 #include "raylib.h"
 #include "Asteroid.h"
 #include "Player.h"
+#include "Saucer.h"
 
 class SaucerManager
 {
     public:
-        std::vector<Asteroid> saucers;
+        std::vector<Saucer> saucers;
 
         SaucerManager();
  
         void PlayerToSaucerCollision(Player& player);
         void Update();
         void Draw();
-        void GameOver();
-        void AddAsteroid(Vector2 position, float parentSize);
 };
 
 #endif

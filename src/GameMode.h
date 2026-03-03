@@ -8,7 +8,7 @@
 #include "Actor.h"
 #include "AsteroidManager.h"
 #include "BulletManager.h"
-
+#include "Saucer.h"
 class GameMode {
 public:
     Player* player;
@@ -17,6 +17,7 @@ public:
     float score;
     float newLifeScore;
     Music music;
+    Saucer testSaucer;
 
     GameMode();
 

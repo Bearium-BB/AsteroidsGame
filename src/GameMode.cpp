@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Asteroid.h"
 #include <iostream>
+#include "Saucer.h"
 
 
 GameMode::GameMode(){
@@ -10,6 +11,7 @@ GameMode::GameMode(){
     music = LoadMusicStream("../MP3/MusicBackground.mp3");
     music.looping = true;
     PlayMusicStream(music);
+    testSaucer = Saucer(player);
 }
 
 void GameMode::Update(){
@@ -36,10 +38,12 @@ void GameMode::Update(){
         player->health = 3;
         asteroidManager.GameOver();
     }
+    testSaucer.Update();
 }
 
 void GameMode::Draw(){
     player->Draw();
     asteroidManager.Draw();
     bulletManager.Draw();
+    testSaucer.Draw();
 }
