@@ -64,7 +64,7 @@ void Player::Update(){
 
     if (IsKeyPressed(KEY_SPACE))
     {
-        bulletManager->AddBullet(Bullet(position.x,position.y,angle));
+        bulletManager->AddBullet(Bullet(position.x,position.y,angle, "player"));
     }
 
     if (IsKeyPressed(KEY_Q))

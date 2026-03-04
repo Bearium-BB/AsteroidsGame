@@ -17,7 +17,7 @@ Saucer::Saucer(Player* currentPlayer, BulletManager* bulletManagerTest)
     float py = GetRandomValue(0, current_height); 
 
     size = 30;
-    velocity = {-10,0};
+    velocity = {-50,0};
     position = {(float)current_width,py};
 
 }
@@ -34,12 +34,14 @@ void Saucer::Update()
 
     position = Vector2Add(position,Vector2Scale(velocity,dt));
     Wrapping();
+    
     if(timeToShoot < 0){
         Vector2 dir = Vector2Subtract(player->position, position);
 
         float angle = atan2f(dir.y, dir.x) * RAD2DEG;
+        Vector2Add(player->position,velocity);
 
-        bulletManager->AddBullet(Bullet(position.x,position.y,angle + 90));
+        bulletManager->AddBullet(Bullet(position.x,position.y,angle + 90, "saucer"));
         timeToShoot = 3;
     }
 }

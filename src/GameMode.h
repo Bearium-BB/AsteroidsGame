@@ -9,13 +9,17 @@
 #include "AsteroidManager.h"
 #include "BulletManager.h"
 #include "Saucer.h"
+#include "SaucerManager.h"
 class GameMode {
 public:
     Player* player;
     AsteroidManager asteroidManager;
     BulletManager bulletManager;
+    SaucerManager saucerManager;
     float score;
     float newLifeScore;
+    float saucerScore;
+
     Music music;
     Saucer testSaucer;
 

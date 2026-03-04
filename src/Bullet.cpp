@@ -3,7 +3,7 @@
 #include "raymath.h"
 
 
-Bullet::Bullet(float x , float y, double angle){
+Bullet::Bullet(float x , float y, double angle, std::string Tag){
 
     speed = 1000;
     size = 5;
@@ -14,8 +14,10 @@ Bullet::Bullet(float x , float y, double angle){
     Vector2 direction = {cosf(rad), sinf(rad)};
 
     position = {x,y};
-
+    
     velocity = Vector2Scale(direction,speed);
+
+    tag = Tag;
 
 }
 
@@ -24,7 +26,9 @@ void Bullet::Update(){
     dt = GetFrameTime();
 
     position = Vector2Add(position,Vector2Scale(velocity,dt));
+
     Wrapping();
+
     timer -= dt;
 }
 

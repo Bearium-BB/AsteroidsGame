@@ -17,6 +17,7 @@ class BulletManager
         BulletManager();
 
         float BulletToAsteroidCollision(AsteroidManager& asteroidManager);
+        float SaucerBulletToPlayerCollision(Player* player);
         void Update();
         void Draw();
         void AddBullet(Bullet bullet);

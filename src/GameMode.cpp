@@ -8,21 +8,28 @@
 GameMode::GameMode(){
     score = 0;
     player = new Player(&bulletManager);
-    music = LoadMusicStream("../MP3/MusicBackground.mp3");
+    music = LoadMusicStream("MP3/MusicBackground.mp3");
     music.looping = true;
     PlayMusicStream(music);
-    testSaucer = Saucer(player, &bulletManager);
 }
 
 void GameMode::Update(){
+    UpdateMusicStream(music);
+    
     float addToScore = 0;
     player->Update();
     asteroidManager.Update();
     asteroidManager.PlayerToAsteroidCollision(*player); 
+
     bulletManager.Update();
 
     addToScore += bulletManager.BulletToAsteroidCollision(asteroidManager);
+    bulletManager.SaucerBulletToPlayerCollision(player);
+
+    saucerManager.SaucerToAsteroidCollision(asteroidManager);
+
     newLifeScore += addToScore;
+    saucerScore += addToScore;
     score += addToScore;
 
     std::cout << score << std::endl;
@@ -34,16 +41,22 @@ void GameMode::Update(){
         player->health += 1;
     }
 
+    if(saucerScore == 10000){
+        saucerScore -= saucerScore;
+        saucerManager.AddSaucer(Saucer(player, &bulletManager));
+    }
+
     if(player->health == 0){
         player->health = 3;
         asteroidManager.GameOver();
     }
-    testSaucer.Update();
+
+    saucerManager.Update();
 }
 
 void GameMode::Draw(){
     player->Draw();
     asteroidManager.Draw();
     bulletManager.Draw();
-    testSaucer.Draw();
+    saucerManager.Draw();
 }

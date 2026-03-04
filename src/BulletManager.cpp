@@ -33,6 +33,23 @@ float BulletManager::BulletToAsteroidCollision(AsteroidManager& asteroidManager)
     return score; 
 }
 
+float BulletManager::SaucerBulletToPlayerCollision(Player* player){
+    float score;
+
+    for (int j = bullets.size() - 1; j >= 0; j--)        
+    {
+        if(CheckCollisionCircles(bullets[j].position, bullets[j].size, player->position, 28)){
+            if(bullets[j].tag == "saucer")
+            {
+                player->TookDamage();
+                bullets.erase(bullets.begin() + j);
+                score += 1000;    
+            }          
+        }
+    }
+    return score; 
+}
+
 void BulletManager::Update(){
     for (int i = 0; i < bullets.size(); i++)
     {

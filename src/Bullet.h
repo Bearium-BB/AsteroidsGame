@@ -3,6 +3,7 @@
 
 #include "raylib.h"
 #include "Actor.h"
+#include <string>
 
 class Bullet : public Actor {
 public:
@@ -11,8 +12,9 @@ public:
     float size;
     float timer;
     float dt;
+    std::string tag; 
 
-    Bullet(float x , float y, double angle);
+    Bullet(float x , float y, double angle, std::string  Tag);
 
     void Update();
     void Draw();
