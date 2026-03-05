@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Asteroid.h"
 #include "GameMode.h"
+#include "button.hpp"
 
 int main() 
 {
@@ -17,6 +18,9 @@ int main()
     InitWindow(screenWidth, screenHeight, "My first RAYLIB program!");
     InitAudioDevice();
     SetTargetFPS(60);
+
+
+    Button startButton{"Img/start_button.png", {300, 150}, 0.65};
 
     GameMode gameMode;
 
@@ -44,7 +48,7 @@ int main()
             }
             else
             {
-                    Rectangle sourceRec = { 0, 0, 100, 100 };
+                startButton.Draw();
             }
 
         EndDrawing();
