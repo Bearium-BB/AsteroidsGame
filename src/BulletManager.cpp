@@ -63,7 +63,7 @@ void BulletManager::PlayerBulletToSaucerCollision(SaucerManager& saucerManager) 
                     bullets[j].position, bullets[j].size,
                     saucerManager.saucers[i].position, saucerManager.saucers[i].size))
             {
-                if ("player") {
+                if (bullets[j].tag  == "player") {
                     saucerManager.saucers.erase(saucerManager.saucers.begin() + i);
                     bullets.erase(bullets.begin() + j);
                     break;

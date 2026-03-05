@@ -11,7 +11,7 @@
 class SaucerManager
 {
     public:
-        std::vector<Saucer> saucers;
+        std::vector<Saucer> saucers;         
 
         SaucerManager();
  
