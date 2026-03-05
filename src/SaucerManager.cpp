@@ -12,7 +12,7 @@
 #include "SaucerManager.h"
 
 SaucerManager::SaucerManager(){
-
+    saucers.resize(0);
 }
 
 void SaucerManager::SaucerToAsteroidCollision(AsteroidManager& asteroidManager){
