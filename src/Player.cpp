@@ -26,7 +26,7 @@ Player::Player(BulletManager* bulletManagerTest)
 
     dt = GetFrameTime();
 
-    health = 3;
+    health = 100;
     isInvincible = false;
     elapsedTimeForIsInvincible = 0;
     isInvincibleTime = 2;
@@ -65,6 +65,15 @@ void Player::Update(){
     if (IsKeyPressed(KEY_SPACE))
     {
         bulletManager->AddBullet(Bullet(position.x,position.y,angle, "player"));
+        float rad = (angle + 90.0f) * DEG2RAD;
+
+        Vector2 forward = {
+            cosf(rad),
+            sinf(rad)
+        };
+
+        forward = Vector2Scale(forward,10 * dt);
+        velocity = Vector2Add(velocity,forward);
     }
 
     if (IsKeyPressed(KEY_Q))
