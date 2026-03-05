@@ -19,6 +19,10 @@ public:
     float score;
     float newLifeScore;
     float saucerScore;
+    float smallSaucerTimer;
+    float dt;
+    float nextAsteroid;
+    int currentLevel;
 
     Music music;
     Saucer testSaucer;
@@ -27,6 +31,7 @@ public:
 
     void Update();
     void Draw();
+    void NextLevel();
 };
 
 #endif

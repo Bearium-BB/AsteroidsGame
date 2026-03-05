@@ -11,12 +11,22 @@ GameMode::GameMode(){
     music = LoadMusicStream("MP3/MusicBackground.mp3");
     music.looping = true;
     PlayMusicStream(music);
+    smallSaucerTimer = 10;
+    nextAsteroid = 5;
+    saucerManager = SaucerManager();
+    currentLevel = 0;
+    NextLevel();
 }
 
 void GameMode::Update(){
+    dt = GetFrameTime();
+
     UpdateMusicStream(music);
-    
+
+    smallSaucerTimer -= dt;
+
     float addToScore = 0;
+
     player->Update();
     asteroidManager.Update();
     asteroidManager.PlayerToAsteroidCollision(*player); 
@@ -25,6 +35,7 @@ void GameMode::Update(){
 
     addToScore += bulletManager.BulletToAsteroidCollision(asteroidManager);
     bulletManager.SaucerBulletToPlayerCollision(player);
+    bulletManager.PlayerBulletToSaucerCollision(saucerManager);
 
     saucerManager.SaucerToAsteroidCollision(asteroidManager);
 
@@ -32,9 +43,10 @@ void GameMode::Update(){
     saucerScore += addToScore;
     score += addToScore;
 
-    std::cout << score << std::endl;
+    //std::cout << score << std::endl;
     DrawText(TextFormat("Score: %02.02f", score), 25, 25, 20, BLUE);
     DrawText(TextFormat("Hp: %02.02f", player->health), 200, 25, 20, GREEN);
+    DrawText(TextFormat("Level %d", currentLevel), 375, 25, 20, GREEN);
 
     if(newLifeScore == 10000){
         newLifeScore -= newLifeScore;
@@ -43,7 +55,11 @@ void GameMode::Update(){
 
     if(saucerScore == 10000){
         saucerScore -= saucerScore;
-        saucerManager.AddSaucer(Saucer(player, &bulletManager));
+        if(saucerScore < 10000){
+            saucerManager.AddSaucer(Saucer(player, &bulletManager));
+        }else{
+            saucerManager.AddSaucer(Saucer(player, &bulletManager,true));
+        }
     }
 
     if(player->health == 0){
@@ -51,7 +67,20 @@ void GameMode::Update(){
         asteroidManager.GameOver();
     }
 
+    if(smallSaucerTimer < 0){
+        if(saucerScore < 10000){
+            saucerManager.AddSaucer(Saucer(player, &bulletManager,false,25));
+        }else{
+            saucerManager.AddSaucer(Saucer(player, &bulletManager,true,25));
+        }
+        smallSaucerTimer = 10;
+    }
+
     saucerManager.Update();
+
+    if(saucerManager.saucers.size() == 0 && asteroidManager.asteroids.size() == 0){
+        NextLevel();
+    }
 }
 
 void GameMode::Draw(){
@@ -59,4 +88,14 @@ void GameMode::Draw(){
     asteroidManager.Draw();
     bulletManager.Draw();
     saucerManager.Draw();
+}
+
+void GameMode::NextLevel(){
+    bulletManager.bullets.clear();
+    saucerManager.saucers.clear();
+    asteroidManager.asteroids.clear();
+    asteroidManager.asteroids.resize(nextAsteroid);
+    nextAsteroid += 2;
+    currentLevel++;
+    score = 0;
 }
