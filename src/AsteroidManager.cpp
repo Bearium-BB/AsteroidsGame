@@ -10,7 +10,7 @@
 
 
 AsteroidManager::AsteroidManager(){
-    asteroids.resize(20);
+    asteroids.resize(0);
 }
 
 
