@@ -50,6 +50,29 @@ float BulletManager::SaucerBulletToPlayerCollision(Player* player){
     return score; 
 }
 
+void BulletManager::PlayerBulletToSaucerCollision(SaucerManager& saucerManager) {
+    for (int i = (int)saucerManager.saucers.size() - 1; i >= 0; i--)
+    {
+        if (i >= (int)saucerManager.saucers.size()) continue;
+
+        for (int j = (int)bullets.size() - 1; j >= 0; j--)
+        {
+            if (j >= (int)bullets.size()) continue;
+
+            if (CheckCollisionCircles(
+                    bullets[j].position, bullets[j].size,
+                    saucerManager.saucers[i].position, saucerManager.saucers[i].size))
+            {
+                if ("player") {
+                    saucerManager.saucers.erase(saucerManager.saucers.begin() + i);
+                    bullets.erase(bullets.begin() + j);
+                    break;
+                }
+            }
+        }
+    }
+}
+
 void BulletManager::Update(){
     for (int i = 0; i < bullets.size(); i++)
     {

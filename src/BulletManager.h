@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "AsteroidManager.h"
 #include "Bullet.h"
+#include "SaucerManager.h"
 
 class BulletManager
 {
@@ -18,6 +19,7 @@ class BulletManager
 
         float BulletToAsteroidCollision(AsteroidManager& asteroidManager);
         float SaucerBulletToPlayerCollision(Player* player);
+        void PlayerBulletToSaucerCollision(SaucerManager& saucerManager);
         void Update();
         void Draw();
         void AddBullet(Bullet bullet);
