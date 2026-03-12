@@ -64,7 +64,13 @@ void GameMode::Update(){
 
     if(player->health == 0){
         player->health = 3;
+        score = 0;
+        nextAsteroid = 5;
+        currentLevel = 1;
         asteroidManager.GameOver();
+        asteroidManager.asteroids.clear();
+        asteroidManager.asteroids.resize(nextAsteroid);
+        score = 0;
     }
 
     if(smallSaucerTimer < 0){

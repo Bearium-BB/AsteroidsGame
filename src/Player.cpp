@@ -26,7 +26,7 @@ Player::Player(BulletManager* bulletManagerTest)
 
     dt = GetFrameTime();
 
-    health = 100;
+    health = 3;
     isInvincible = false;
     elapsedTimeForIsInvincible = 0;
     isInvincibleTime = 2;
