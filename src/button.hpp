@@ -1,14 +1,18 @@
 #pragma once
-#include <raylib.h>
+#include "raylib.h"
 
 class Button
 {
-    public:
-        Button(const char* imagePath, Vector2 imagePosition, float scale);
-        ~Button();
-        void Draw();
-        bool isPressed(Vector2 mousePos, bool mousePressed);
-    private:
-        Texture2D texture;
-        Vector2 position;
+public:
+    Button(Vector2 pos, Vector2 size, const char* text);
+
+    void Draw();
+    bool isPressed(Vector2 mousePos, bool mousePressed);
+
+private:
+    Vector2 position;
+    Vector2 size;
+    const char* label;
+
+    Rectangle rect;
 };

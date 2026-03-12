@@ -20,16 +20,17 @@ int main()
     SetTargetFPS(60);
 
 
-    Button startButton{"Img/start_button.png", {300, 150}, 0.65};
+    Button startButton({300, 200}, {200, 60}, "Start Game");    
 
     GameMode gameMode;
 
     while (!WindowShouldClose())
     {    
-        if(IsKeyDown(KEY_SPACE))
+        if(startButton.isPressed(GetMousePosition(), IsMouseButtonPressed(MOUSE_LEFT_BUTTON)))
         {
-            startGame = 1;
-        } 
+            startGame = true;
+        }
+
 
         if(startGame)
         {
@@ -37,8 +38,12 @@ int main()
         }
         else
         {
-            DrawText("Asteroids Game", screenWidth/2, 25, 20, BLACK);
-            DrawText("Press Space To Play", screenWidth/2, 100, 20, BLACK);
+            const char* title = "Asteroids Game";
+            int fontSize = 20;
+
+            int textWidth = MeasureText(title, fontSize);
+
+            DrawText(title, screenWidth/2 - textWidth/2, 25, fontSize, BLACK);        
         }
  
         BeginDrawing();

@@ -1,38 +1,36 @@
 #include "button.hpp"
 
-Button::Button(const char *imagePath, Vector2 imagePosition, float scale)
+Button::Button(Vector2 pos, Vector2 size, const char* text)
 {
-    Image image = LoadImage(imagePath);
+    position = pos;
+    this->size = size;
+    label = text;
 
-    int originalWidth = image.width;
-    int originalHeight = image.height;
-
-    int newWidth = static_cast<int>(originalWidth * scale);
-    int newHeight = static_cast<int>(originalHeight * scale);
-
-    ImageResize(&image, newWidth, newHeight);
-    texture = LoadTextureFromImage(image);
-    UnloadImage(image);
-    position = imagePosition;
-}
-
-Button::~Button()
-{
-    UnloadTexture(texture);
+    rect = { position.x, position.y, size.x, size.y };
 }
 
 void Button::Draw()
 {
-    DrawTextureV(texture, position, WHITE);
+    DrawRectangleRec(rect, LIGHTGRAY);
+
+    DrawRectangleLinesEx(rect, 2, BLACK);
+
+    int fontSize = 20;
+
+    int textWidth = MeasureText(label, fontSize);
+
+    float textX = position.x + (size.x / 2) - (textWidth / 2);
+    float textY = position.y + (size.y / 2) - (fontSize / 2);
+
+    DrawText(label, textX, textY, fontSize, BLACK);
 }
 
 bool Button::isPressed(Vector2 mousePos, bool mousePressed)
-{   
-    Rectangle rect = {position.x, position.y, static_cast<float>(texture.width), static_cast<float>(texture.height)};
-
-    if(CheckCollisionPointRec(mousePos,rect) && mousePressed)
+{
+    if (CheckCollisionPointRec(mousePos, rect) && mousePressed)
     {
         return true;
     }
+
     return false;
 }
