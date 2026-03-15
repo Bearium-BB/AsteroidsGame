@@ -3,69 +3,88 @@
 #include "rlgl.h"
 #include <math.h>
 #include "raymath.h"
+#include "PolygonCollision.h"
 
-Asteroid::Asteroid(){
+static void InitAsteroid(Asteroid& a, float sz)
+{
+    a.size    = sz;
+    a.speed   = 300.0f / (sz / 2.0f);
+    a.angle   = (float)GetRandomValue(0, 359);
+    a.numSides = GetRandomValue(6, 10);
 
-    int current_width = GetScreenWidth();
-    int current_height = GetScreenHeight();
-
-    float px = GetRandomValue(0, current_width); 
-    float py = GetRandomValue(0, current_height); 
-
-    float directionX = (float)GetRandomValue(-1000, 1000)/1000;
-    float directionY = (float)GetRandomValue(-1000, 1000)/1000;
-    
-    size = GetRandomValue(5, 25);
-
-    speed = 300 / (size/2);
-
-    position = {px,py};
-    direction = {directionX,directionY};
-    velocity = Vector2Scale(direction,speed);
-
+    a.radiusOffsets.resize(a.numSides);
+    for (int i = 0; i < a.numSides; i++)
+        a.radiusOffsets[i] = (float)GetRandomValue(-30, 30) / 100.0f * sz;
 }
 
-Asteroid::Asteroid(Vector2 position,float parentSize){
-    float directionX = (float)GetRandomValue(-1000, 1000)/1000;
-    float directionY = (float)GetRandomValue(-1000, 1000)/1000;
-    
-    speed = 300 / (parentSize/2);
+Asteroid::Asteroid()
+{
+    int w = GetScreenWidth();
+    int h = GetScreenHeight();
 
-    this->position = position;
-    direction = {directionX,directionY};
-    velocity = Vector2Scale(direction,speed);
-    size = parentSize/2;
+    position  = { (float)GetRandomValue(0, w), (float)GetRandomValue(0, h) };
+    float dirX = (float)GetRandomValue(-1000, 1000) / 1000.0f;
+    float dirY = (float)GetRandomValue(-1000, 1000) / 1000.0f;
+    direction  = { dirX, dirY };
+
+    InitAsteroid(*this, (float)GetRandomValue(15, 40));
+    velocity = Vector2Scale(direction, speed);
 }
 
-void Asteroid::Update(){
+Asteroid::Asteroid(Vector2 pos, float parentSize)
+{
+    float dirX = (float)GetRandomValue(-1000, 1000) / 1000.0f;
+    float dirY = (float)GetRandomValue(-1000, 1000) / 1000.0f;
+    direction  = { dirX, dirY };
+    position   = pos;
 
+    InitAsteroid(*this, parentSize / 2.0f);
+    velocity = Vector2Scale(direction, speed);
+}
+
+std::vector<Vector2> Asteroid::GetWorldVertices() const
+{
+    std::vector<Vector2> verts;
+    verts.reserve(numSides);
+    float step = 360.0f / numSides;
+    for (int i = 0; i < numSides; i++)
+    {
+        float rad    = (angle + step * i) * DEG2RAD;
+        float r      = size + radiusOffsets[i];
+        verts.push_back({ position.x + cosf(rad) * r,
+                          position.y + sinf(rad) * r });
+    }
+    return verts;
+}
+
+void Asteroid::Update()
+{
     dt = GetFrameTime();
-
-    position = Vector2Add(position,Vector2Scale(velocity,dt));
+    position = Vector2Add(position, Vector2Scale(velocity, dt));
+    angle   += 20.0f * dt;         
+    if (angle >= 360.0f) angle -= 360.0f;
     Wrapping();
 }
 
-void Asteroid::Draw(){
-    DrawCircle(position.x,position.y,size,{0,120,120,255});
+void Asteroid::Draw()
+{
+    auto verts = GetWorldVertices();
+    int n = (int)verts.size();
+    for (int i = 0; i < n; i++)
+    {
+        Vector2 a = verts[i];
+        Vector2 b = verts[(i + 1) % n];
+        DrawLineEx(a, b, 2.0f, { 0, 200, 200, 255 });
+    }
 }
 
-void Asteroid::Wrapping(){
-    int current_width = GetScreenWidth();
-    int current_height = GetScreenHeight();
+void Asteroid::Wrapping()
+{
+    int w = GetScreenWidth();
+    int h = GetScreenHeight();
 
-    if(position.x > current_width){
-        position.x = 1;
-    }
-
-    if(position.x < 0){
-    position.x = current_width - 1;
-    }
-
-    if(position.y > current_height){
-        position.y = 1;
-    }
-
-    if(position.y < 0){
-        position.y = current_height - 1;
-    }
+    if (position.x >  w) position.x = 1.0f;
+    if (position.x <  0) position.x = (float)(w - 1);
+    if (position.y >  h) position.y = 1.0f;
+    if (position.y <  0) position.y = (float)(h - 1);
 }

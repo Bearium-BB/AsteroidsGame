@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "Actor.h"
 #include "Bullet.h"
+#include "PolygonCollision.h"
 #include <vector>
 
 class BulletManager;
@@ -15,28 +16,31 @@ public:
     Vector2 p2;
     Vector2 p3;
     Vector2 center;
+
     BulletManager* bulletManager;
     float health;
-    bool isInvincible;
+    bool  isInvincible;
     float elapsedTimeForIsInvincible;
     float isInvincibleTime;
 
     std::vector<Bullet> bullets;
 
     double angle;
-    float maxSpeed;
-    float dt;
-    float forwardSpeed;
-    float rotationSpeed;
-    Color color = { 255, 0, 0, 255 };
+    float  maxSpeed;
+    float  dt;
+    float  forwardSpeed;
+    float  rotationSpeed;
+    Color  color = { 255, 0, 0, 255 };
 
-    Player(BulletManager* bulletManagerTest);              
+    Player(BulletManager* bulletManagerTest);
 
     void Update();
     void UpdatePosition();
     void Draw();
-    void Wrapping(); 
+    void Wrapping();
     void TookDamage();
+
+    std::vector<Vector2> GetWorldVertices() const override;
 };
 
 #endif

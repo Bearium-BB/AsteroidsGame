@@ -3,6 +3,8 @@
 
 #include "raylib.h"
 #include "Actor.h"
+#include "PolygonCollision.h"
+#include <vector>
 
 class Asteroid : public Actor {
 public:
@@ -13,14 +15,19 @@ public:
     float dt;
     float speed;
     float size;
-    float angle;
+    float angle;    
+
+    std::vector<float> radiusOffsets;
+    int numSides;
 
     Asteroid();
-    Asteroid(Vector2 position,float parentSize);
+    Asteroid(Vector2 position, float parentSize);
 
     void Update();
     void Draw();
-    void Wrapping();      
+    void Wrapping();
+
+    std::vector<Vector2> GetWorldVertices() const override;
 };
 
 #endif

@@ -4,100 +4,105 @@
 #include "Asteroid.h"
 #include "AsteroidManager.h"
 #include "Player.h"
-#include <stdio.h>
+#include "PolygonCollision.h"
 #include <iostream>
 #include "raymath.h"
 #include "Bullet.h"
 
+BulletManager::BulletManager() {}
 
-BulletManager::BulletManager(){
+float BulletManager::BulletToAsteroidCollision(AsteroidManager& asteroidManager)
+{
+    float score = 0.0f;
 
-}
-
-float BulletManager::BulletToAsteroidCollision(AsteroidManager& asteroidManager){
-    float score;
-    for (int i = asteroidManager.asteroids.size() - 1; i >= 0; i--)
+    for (int i = (int)asteroidManager.asteroids.size() - 1; i >= 0; i--)
     {
-        for (int j = bullets.size() - 1; j >= 0; j--)        
+        auto asteroidPoly = asteroidManager.asteroids[i].GetWorldVertices();
+
+        for (int j = (int)bullets.size() - 1; j >= 0; j--)
         {
-            if(CheckCollisionCircles(bullets[j].position, bullets[j].size, asteroidManager.asteroids[i].position, asteroidManager.asteroids[i].size)){
-                
-                asteroidManager.AddAsteroid(asteroidManager.asteroids[i].position,asteroidManager.asteroids[i].size);
-                asteroidManager.AddAsteroid(asteroidManager.asteroids[i].position,asteroidManager.asteroids[i].size);  
+            auto bulletPoly = bullets[j].GetWorldVertices();
+
+            if (CheckPolygonCollision(bulletPoly, asteroidPoly))
+            {
+                asteroidManager.AddAsteroid(asteroidManager.asteroids[i].position,
+                                            asteroidManager.asteroids[i].size);
+                asteroidManager.AddAsteroid(asteroidManager.asteroids[i].position,
+                                            asteroidManager.asteroids[i].size);
                 asteroidManager.asteroids.erase(asteroidManager.asteroids.begin() + i);
                 bullets.erase(bullets.begin() + j);
-                score += 1000;              
+                score += 1000.0f;
+                break;
             }
         }
-    }   
-    return score; 
+    }
+    return score;
 }
 
-float BulletManager::SaucerBulletToPlayerCollision(Player* player){
-    float score;
+float BulletManager::SaucerBulletToPlayerCollision(Player* player)
+{
+    float score = 0.0f;
+    auto  playerPoly = player->GetWorldVertices();
 
-    for (int j = bullets.size() - 1; j >= 0; j--)        
+    for (int j = (int)bullets.size() - 1; j >= 0; j--)
     {
-        if(CheckCollisionCircles(bullets[j].position, bullets[j].size, player->position, 28)){
-            if(bullets[j].tag == "saucer")
-            {
-                player->TookDamage();
-                bullets.erase(bullets.begin() + j);
-                score += 1000;    
-            }          
+        if (bullets[j].tag != "saucer") continue;
+
+        auto bulletPoly = bullets[j].GetWorldVertices();
+
+        if (CheckPolygonCollision(bulletPoly, playerPoly))
+        {
+            player->TookDamage();
+            bullets.erase(bullets.begin() + j);
+            score += 1000.0f;
         }
     }
-    return score; 
+    return score;
 }
 
-void BulletManager::PlayerBulletToSaucerCollision(SaucerManager& saucerManager) {
+void BulletManager::PlayerBulletToSaucerCollision(SaucerManager& saucerManager)
+{
     for (int i = (int)saucerManager.saucers.size() - 1; i >= 0; i--)
     {
         if (i >= (int)saucerManager.saucers.size()) continue;
+        auto saucerPoly = saucerManager.saucers[i].GetWorldVertices();
 
         for (int j = (int)bullets.size() - 1; j >= 0; j--)
         {
             if (j >= (int)bullets.size()) continue;
+            if (bullets[j].tag != "player") continue;
 
-            if (CheckCollisionCircles(
-                    bullets[j].position, bullets[j].size,
-                    saucerManager.saucers[i].position, saucerManager.saucers[i].size))
+            auto bulletPoly = bullets[j].GetWorldVertices();
+
+            if (CheckPolygonCollision(bulletPoly, saucerPoly))
             {
-                if (bullets[j].tag  == "player") {
-                    saucerManager.saucers.erase(saucerManager.saucers.begin() + i);
-                    bullets.erase(bullets.begin() + j);
-                    break;
-                }
+                saucerManager.saucers.erase(saucerManager.saucers.begin() + i);
+                bullets.erase(bullets.begin() + j);
+                break;
             }
         }
     }
 }
 
-void BulletManager::Update(){
-    for (int i = 0; i < bullets.size(); i++)
-    {
-        bullets[i].Update();
-    }
+void BulletManager::Update()
+{
+    for (auto& b : bullets)
+        b.Update();
 
-    
-    for (int i = 0; i < bullets.size(); i++)
+    for (int i = (int)bullets.size() - 1; i >= 0; i--)
     {
-        if(bullets[i].timer < 0){
+        if (bullets[i].timer < 0.0f)
             bullets.erase(bullets.begin() + i);
-        }
     }
-    
-
 }
 
-void BulletManager::Draw(){
-    for (int i = 0; i < bullets.size(); i++)
-    {
-        bullets[i].Draw();
-    }
-
+void BulletManager::Draw()
+{
+    for (auto& b : bullets)
+        b.Draw();
 }
 
-void BulletManager::AddBullet(Bullet bullet){
+void BulletManager::AddBullet(Bullet bullet)
+{
     bullets.push_back(bullet);
 }
