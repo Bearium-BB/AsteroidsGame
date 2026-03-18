@@ -9,7 +9,7 @@
 
 int main() 
 {
-    const Color darkGreen = {20, 160, 133, 255};
+    const Color darkGreen = {0, 105, 110, 255};
 
     constexpr int screenWidth = 800;
     constexpr int screenHeight = 600;
@@ -38,7 +38,7 @@ int main()
         }
         else
         {
-            const char* title = "Asteroids Game";
+            const char* title = "Against The Curve";
             int fontSize = 20;
 
             int textWidth = MeasureText(title, fontSize);

@@ -44,9 +44,9 @@ void GameMode::Update(){
     score += addToScore;
 
     //std::cout << score << std::endl;
-    DrawText(TextFormat("Score: %02.02f", score), 25, 25, 20, BLUE);
-    DrawText(TextFormat("Hp: %02.02f", player->health), 200, 25, 20, GREEN);
-    DrawText(TextFormat("Level %d", currentLevel), 375, 25, 20, GREEN);
+    DrawText(TextFormat("Score: %02.02f", score), 25, 25, 20, {255,255,255,255});
+    DrawText(TextFormat("Hp: %02.02f", player->health), 200, 25, 20, {255,255,255,255});
+    DrawText(TextFormat("Level %d", currentLevel), 375, 25, 20, {255,255,255,255});
 
     if(newLifeScore == 10000){
         newLifeScore -= newLifeScore;

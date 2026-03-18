@@ -28,7 +28,7 @@ public:
     float dt;
     float forwardSpeed;
     float rotationSpeed;
-    Color color = { 255, 0, 0, 255 };
+    Color color = { 255, 140, 0, 255 };
 
     Player(BulletManager* bulletManagerTest);              
 

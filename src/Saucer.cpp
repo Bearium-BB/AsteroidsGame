@@ -125,7 +125,7 @@ void Saucer::Update()
 }
 
 void Saucer::Draw(){
-    DrawCircle(position.x,position.y,size,{0,0,50,255});
+    DrawCircle(position.x,position.y,size,{170, 120, 255,255});
 }
 
 void Saucer::Wrapping(){

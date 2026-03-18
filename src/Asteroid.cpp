@@ -46,7 +46,7 @@ void Asteroid::Update(){
 }
 
 void Asteroid::Draw(){
-    DrawCircle(position.x,position.y,size,{0,120,120,255});
+    DrawCircle(position.x,position.y,size,{120, 130, 135,255});
 }
 
 void Asteroid::Wrapping(){
