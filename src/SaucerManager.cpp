@@ -16,7 +16,7 @@ SaucerManager::SaucerManager(){
 }
 
 void SaucerManager::SaucerToAsteroidCollision(AsteroidManager& asteroidManager){
-    float score;
+    float score = 0;
     for (int i = asteroidManager.asteroids.size() - 1; i >= 0; i--)
     {
         for (int j = saucers.size() - 1; j >= 0; j--)        
@@ -28,6 +28,7 @@ void SaucerManager::SaucerToAsteroidCollision(AsteroidManager& asteroidManager){
                 asteroidManager.asteroids.erase(asteroidManager.asteroids.begin() + i);
                 saucers.erase(saucers.begin() + j);
                 score += 1000;              
+                break; // asteroid i was erased; do not index it again
             }
         }
     }   

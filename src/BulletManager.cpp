@@ -15,7 +15,7 @@ BulletManager::BulletManager(){
 }
 
 float BulletManager::BulletToAsteroidCollision(AsteroidManager& asteroidManager){
-    float score;
+    float score = 0;
     for (int i = asteroidManager.asteroids.size() - 1; i >= 0; i--)
     {
         for (int j = bullets.size() - 1; j >= 0; j--)        
@@ -27,6 +27,7 @@ float BulletManager::BulletToAsteroidCollision(AsteroidManager& asteroidManager)
                 asteroidManager.asteroids.erase(asteroidManager.asteroids.begin() + i);
                 bullets.erase(bullets.begin() + j);
                 score += 1000;              
+                break; // asteroid i was erased; do not index it again
             }
         }
     }   
@@ -34,7 +35,7 @@ float BulletManager::BulletToAsteroidCollision(AsteroidManager& asteroidManager)
 }
 
 float BulletManager::SaucerBulletToPlayerCollision(Player* player){
-    float score;
+    float score = 0;
 
     for (int j = bullets.size() - 1; j >= 0; j--)        
     {

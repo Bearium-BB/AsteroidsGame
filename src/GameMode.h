@@ -16,13 +16,13 @@ public:
     AsteroidManager asteroidManager;
     BulletManager bulletManager;
     SaucerManager saucerManager;
-    float score;
-    float newLifeScore;
-    float saucerScore;
-    float smallSaucerTimer;
-    float dt;
-    float nextAsteroid;
-    int currentLevel;
+    float score = 0;
+    float newLifeScore = 0;
+    float saucerScore = 0;
+    float smallSaucerTimer = 0;
+    float dt = 0;
+    float nextAsteroid = 0;
+    int currentLevel = 0;
 
     Music music;
     Saucer testSaucer;

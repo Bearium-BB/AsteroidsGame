@@ -13,7 +13,7 @@ class BulletManager
 {
     public:
         std::vector<Bullet> bullets;
-        float score;
+        float score = 0;
 
         BulletManager();
 

@@ -9,8 +9,8 @@
 class Saucer : public Actor
 {
     public:
-        float dt;
-        float size;
+        float dt = 0;
+        float size = 25;
         float timeToShoot = 3;
 
         float minSize = 10.0f;
@@ -19,10 +19,10 @@ class Saucer : public Actor
         float minSpread = 1.0f;
         float maxSpread = 15.0f;
 
-        bool smallSaucerImproveAim;
+        bool smallSaucerImproveAim = false;
 
-        Player* player;
-        BulletManager* bulletManager;
+        Player* player = nullptr;
+        BulletManager* bulletManager = nullptr;
 
         Saucer();
         Saucer(Player* currentPlayer, BulletManager* bulletManagerTest);   

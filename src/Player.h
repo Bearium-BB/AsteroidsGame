@@ -23,7 +23,7 @@ public:
 
     std::vector<Bullet> bullets;
 
-    double angle;
+    double angle = 0.0;
     float maxSpeed;
     float dt;
     float forwardSpeed;
